@@ -1,46 +1,67 @@
 class Book:
-    def __init__(self, title, author,copies,borrowed):
+    def __init__(self,title,author,copies,borrowed):
         self.title = title
         self.author = author
         self.copies = copies
         self.borrowed = borrowed
     def available_copies(self):
-        available = self.copies - self.borrowed
-        return available
+        return self.copies - self.borrowed
+    def return_book(self,n):
+        self.borrowed = self.borrowed - n
+        return self.borrowed
+        print("Book returned successfully")
+    def display_book(self):
+        print(f"{self.title} - {self.author} - {self.copies} - {self.borrowed}")
     def borrow_book(self,n):
-        if (self.copies > 0):
-            self.borrowed = self.copies - 1
-            return self.borrowed
+        if self.copies - self.borrowed >= 1:
+            self.borrowed = self.borrowed + n
+        print("Book borrowed successfully")
+books = []
+user_input = input("How many books you want to enter: ")
+while int(user_input) > 0:
+    if int(user_input) < 3:
+        print("Please enter a number greater than 3")
+    else:
+        n = 0
+        while n < int(user_input):
+            name = str(input("Enter Book Title: "))
+            writer= str(input("Enter Book Author: "))
+            no_copies = int(input("Enter Book copies: "))
+            no_borrowed = int(input("Enter Book borrowed: "))
+            n = n + 1
+            book_obj= Book(name,writer,no_copies,no_borrowed)
+            books.append(book_obj)
+    print(f"Enter 1 to Display Books")
+    print(f"Enter 2 to Return Books")
+    print(f"Enter 3 to Borrow Books")
+    print(f"Enter 4 to End Program")
+    menu = int(input("Enter your choice: "))
+    while int(menu) > 0:
+        if int(menu) == 1:
+            for i in books:
+                i.display_book()
+        elif int(menu) == 2:
+            book_index = int(input("Enter index of book: "))
+            book_return_num = int(input("Enter the number of book you want to return: "))
+            books[book_index].return_book(book_return_num)
+        elif int(menu) == 3:
+            book_index = int(input("Enter index of book: "))
+            book_borrow_num = int(input("Enter the number of book you want to borrow: "))
+            books[book_index].borrow_book(book_borrow_num)
+        elif int(menu) == 4:
+            print("Program ended!")
+            break
         else:
-            print("Sorry, you cannot borrow more books.")
-    def return_book(self):
-        self.copies = self.copies + 1
-        self.borrowed = self.borrowed - 1
-        return self.borrowed,self.copies
-    def display_book(self,n):
-        self.n = n
-        for i in n:
-            print(f"Name of book is {self.title}")
-            print(f"Author name is {self.author}")
-            print(f"Copies available: {self.copies}.")
-            print(f"Borrowed amount: {self.borrowed}.")
+            print("Please enter a valid choice")
 
-book = []
-book_amount = int(input("Enter book amount: "))
-i = 0
-if book_amount > 3:
-    while i < book_amount:
-        i +=1
-        book_name = input("Enter book name: ")
-        book_author = input("Enter book author: ")
-        book_copies = int(input("Enter amount of book copies: "))
-        book_borrowed = int(input("Enter amount of book borrowed : "))
-        book.append(Book(book_name,book_author,book_amount,book_amount))
-    user_input = input("Input 1 to display books, 2 to borrow a book, 3 to return a book or 4 to exit: ")
-    if user_input == 1:
-        book.display_book(book)
-else:
-    print("Enter a bigger amount of books.")
+
+
+
+
+
+
+
+
 
 
 
